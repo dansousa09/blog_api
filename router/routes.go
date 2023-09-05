@@ -1,7 +1,7 @@
 package router
 
 import (
-	handler "github.com/dansousa09/blog_api/handlers"
+	handler "github.com/dansousa09/blog_api/handler"
 	"github.com/gin-gonic/gin"
 )
 
