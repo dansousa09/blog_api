@@ -1,13 +1,25 @@
 package schemas
 
-import "time"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
 
 type Post struct {
-	ID        uint      `gorm:"primaryKey" json:"id"`
-	Title     string    `gorm:"size:255" json:"title"`
-	Content   string    `gorm:"size:255" json:"content"`
-	Author    string    `gorm:"size:255" json:"author"`
+	*gorm.Model
+	ID      uint
+	Title   string
+	Content string
+	Author  string
+}
+
+type PostResponse struct {
+	ID        uint      `json:"id"`
+	Title     string    `json:"title"`
+	Content   string    `json:"content"`
+	Author    string    `json:"author"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
-	DeletedAt time.Time `gorm:"index" json:"deleted_at"`
+	DeletedAt time.Time `json:"deleted_at,omitempty"`
 }
