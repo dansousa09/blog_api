@@ -10,10 +10,10 @@ func InitializeRoutes(r *gin.Engine) {
 
 	v1 := r.Group(basePath)
 	{
-		v1.GET("/opening", handler.CreateOpeningHandler)
-		v1.GET("/openings", handler.ListOpeningsHandler)
-		v1.POST("/opening", handler.CreateOpeningHandler)
-		v1.PUT("/opening", handler.UpdateOpeningHandler)
-		v1.DELETE("/opening", handler.DeleteOpeningHandler)
+		v1.GET("/post", handler.ShowPostHandler)
+		v1.GET("/posts", handler.ListPostsHandler)
+		v1.POST("/post", handler.CreatePostHandler)
+		v1.PUT("/post", handler.UpdatePostHandler)
+		v1.DELETE("/post", handler.DeletePostHandler)
 	}
 }
