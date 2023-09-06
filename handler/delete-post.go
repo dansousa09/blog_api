@@ -7,11 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-const (
-	errFieldIsRequiredMsg = "field is required"
-	errPostNotFoundMsg    = "post not found"
-	errDeletePostErrorMsg = "error on delete post"
-)
+const errDeletePostErrorMsg = "error on delete post"
 
 func DeletePostHandler(ctx *gin.Context) {
 	id := ctx.Query("id")

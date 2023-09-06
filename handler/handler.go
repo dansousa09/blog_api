@@ -10,6 +10,11 @@ var (
 	db     *gorm.DB
 )
 
+const (
+	errFieldIsRequiredMsg = "field is required"
+	errPostNotFoundMsg    = "post not found"
+)
+
 func InitializeHandler() {
 	logger = config.GetLogger("handler")
 	db = config.GetDB()
