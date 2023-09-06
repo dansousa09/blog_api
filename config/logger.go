@@ -6,6 +6,10 @@ import (
 	"os"
 )
 
+const (
+	logFilePath = "./logs/blog_api.log"
+)
+
 type Logger struct {
 	debug  *log.Logger
 	info   *log.Logger
@@ -14,17 +18,28 @@ type Logger struct {
 	writer io.Writer
 }
 
-func NewLogger(p string) *Logger {
-	writer := io.Writer(os.Stdout)
-	logger := log.New(writer, p, log.Ldate|log.Ltime|log.Lshortfile)
+func NewLogger(p string) (*Logger, error) {
+	err := os.MkdirAll("./logs", os.ModePerm)
+	if err != nil {
+		return nil, err
+	}
+
+	file, err := os.OpenFile(logFilePath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, os.ModePerm)
+	if err != nil {
+		return nil, err
+	}
+
+	multiWriter := io.MultiWriter(os.Stdout, file)
+
+	logger := log.New(multiWriter, p, log.Ldate|log.Ltime|log.Lshortfile)
 
 	return &Logger{
-		debug:  log.New(writer, "DEBUG: ", logger.Flags()),
-		info:   log.New(writer, "INFO: ", logger.Flags()),
-		warn:   log.New(writer, "WARN: ", logger.Flags()),
-		error:  log.New(writer, "ERROR: ", logger.Flags()),
-		writer: writer,
-	}
+		debug:  log.New(file, "DEBUG: ", logger.Flags()),
+		info:   log.New(file, "INFO: ", logger.Flags()),
+		warn:   log.New(file, "WARN: ", logger.Flags()),
+		error:  log.New(file, "ERROR: ", logger.Flags()),
+		writer: file,
+	}, nil
 }
 
 func (l *Logger) Debug(v ...interface{}) {

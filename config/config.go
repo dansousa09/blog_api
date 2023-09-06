@@ -26,6 +26,9 @@ func GetDB() *gorm.DB {
 }
 
 func GetLogger(p string) *Logger {
-	logger = NewLogger(p)
+	logger, err := NewLogger(p)
+	if err != nil {
+		fmt.Errorf("error on initialize Logger: %s", err.Error())
+	}
 	return logger
 }
