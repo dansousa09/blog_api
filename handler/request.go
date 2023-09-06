@@ -31,3 +31,17 @@ func (r *CreatePostRequest) Validate() error {
 
 	return nil
 }
+
+type UpdatePostRequest struct {
+	Title   string `json:"title"`
+	Content string `json:"content"`
+	Author  string `json:"author"`
+}
+
+func (r *UpdatePostRequest) Validate() error {
+	if r.Title == "" || r.Content == "" || r.Author == "" {
+		return fmt.Errorf("at least one of the Post fields are required")
+	}
+
+	return nil
+}
